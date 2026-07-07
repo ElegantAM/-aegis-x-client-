@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <div class="container">
-        <h2>AEGIS-X ENGINE</h2>
-        <textarea id="problem" placeholder="Describe your legal issue..."></textarea>
-        <button onclick="analyze()">RUN ANALYSIS</button>
-        <div id="result"></div>
-    </div>
+    <h2>AEGIS-X ENGINE</h2>
+    <textarea id="problem" placeholder="Describe your issue..."></textarea>
+    <button onclick="run()">RUN ANALYSIS</button>
+    <div id="result"></div>
+
     <script>
-        async function analyze() {
+        async function run() {
             const problem = document.getElementById('problem').value;
-            const resDiv = document.getElementById('result');
-            resDiv.innerText = "Processing...";
+            const res = document.getElementById('result');
+            res.innerText = "Connecting...";
+            
             try {
                 const response = await fetch('https://aegis-backend-oms5.onrender.com/submit', {
                     method: 'POST',
-                    mode: 'cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'cors', // This is the fix for browser security blocks
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ problem: problem })
                 });
+                
                 const data = await response.json();
-                resDiv.innerText = data.analysis || data.error;
-            } catch (err) {
-                resDiv.innerText = "Error: Could not connect to Aegis Backend. Check your internet.";
+                res.innerText = data.analysis || data.error;
+            } catch (e) {
+                res.innerText = "Connection Failed. Please ensure your Render backend is awake.";
             }
         }
     </script>

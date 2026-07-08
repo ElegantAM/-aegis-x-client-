@@ -73,76 +73,45 @@
 
 <script>
     // Wake up the server as soon as the page loads
+    // UPDATED to your new URL:
+    fetch('https://aegis-app-ouok.onrender.com/')
+        .then(() => console.log("Backend is waking up..."))
+        .catch(() => console.log("Backend needs more time."));
 
-    fetch('https://aegis-backend-oms5.onrender.com/')
+    async function runAnalysis() {
+        const input = document.getElementById('problem').value;
+        const output = document.getElementById('result');
+        
+        if (!input.trim()) {
+            alert("Please enter an issue to analyze.");
+            return;
+        }
 
-        .then(() => console.log("Backend is waking up..."))
-
-        .catch(() => console.log("Backend needs more time."));
-
-
-    async function runAnalysis() {
-
-        const input = document.getElementById('problem').value;
-
-        const output = document.getElementById('result');
-
-        
-
-        if (!input.trim()) {
-
-            alert("Please enter an issue to analyze.");
-
-            return;
-
-        }
-
-
-        output.innerText = "Analyzing... (If the server was asleep, this may take 30-60 seconds)";
-
-        
-
-        try {
-
-            const response = await fetch('https://aegis-backend-oms5.onrender.com/submit', {
-
-                method: 'POST',
-
-                mode: 'cors',
-
-                headers: {'Content-Type': 'application/json'},
-
-                body: JSON.stringify({ problem: input })
-
-            });
-
-            
-
-            const data = await response.json();
-
-            
-
-            if (data.analysis) {
-
-                output.innerText = "Analysis: " + data.analysis;
-
-            } else {
-
-                output.innerText = "Error: " + (data.error || "Unknown server error");
-
-            }
-
-        } catch (error) {
-
-            output.innerText = "Connection failed. The server is still waking up. Please wait 30 seconds and click RUN ANALYSIS again.";
-
-        }
-
-    }
-
-
+        output.innerText = "Analyzing... (If the server was asleep, this may take 30-60 seconds)";
+        
+        try {
+            // UPDATED to your new URL:
+            const response = await fetch('https://aegis-app-ouok.onrender.com/submit', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ problem: input })
+            });
+            
+            const data = await response.json();
+            
+            if (data.analysis) {
+                output.innerText = "Analysis: " + data.analysis;
+            } else {
+                output.innerText = "Error: " + (data.error || "Unknown server error");
+            }
+        } catch (error) {
+            output.innerText = "Connection failed. Please ensure the backend is active on Render.";
+        }
+    }
 </script>
 
 </body>
 </html>
+
 

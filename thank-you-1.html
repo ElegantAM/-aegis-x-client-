@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Confirmed — AEGIS-X</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B2A4A;
+    --ink-soft: #3A4460;
+    --paper: #F5EFE0;
+    --paper-line: #E3D9BE;
+    --seal-red: #A93226;
+    --gold: #B8892B;
+    --slate: #4A4F5C;
+    --white: #FFFDF8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--ink);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(184,137,43,0.08), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(184,137,43,0.06), transparent 45%);
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--slate);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+
+  .card {
+    background: var(--paper);
+    max-width: 620px;
+    width: 100%;
+    border: 1px solid var(--paper-line);
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.55);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Ticket perforation edge between header and body */
+  .perf {
+    position: relative;
+    height: 0;
+    border-top: 2px dashed var(--paper-line);
+    margin: 0 28px;
+  }
+  .perf::before, .perf::after {
+    content: "";
+    position: absolute;
+    top: -11px;
+    width: 22px;
+    height: 22px;
+    background: var(--ink);
+    border-radius: 50%;
+  }
+  .perf::before { left: -39px; }
+  .perf::after { right: -39px; }
+
+  .letterhead {
+    padding: 36px 40px 28px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 34px;
+    color: var(--ink);
+    margin-top: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .subhead {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+
+  .stamp {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 92px;
+    height: 92px;
+    border: 2.5px solid var(--seal-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-14deg);
+    color: var(--seal-red);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-align: center;
+    line-height: 1.35;
+    opacity: 0.92;
+    animation: stampIn 0.5s cubic-bezier(.2,1.4,.4,1) 0.15s both;
+  }
+  .stamp::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--seal-red);
+    border-radius: 50%;
+  }
+  @keyframes stampIn {
+    from { transform: rotate(-14deg) scale(2.2); opacity: 0; }
+    to   { transform: rotate(-14deg) scale(1); opacity: 0.92; }
+  }
+
+  .ledger {
+    margin: 28px 40px 8px;
+    border: 1px solid var(--paper-line);
+    background: var(--white);
+  }
+  .ledger-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .ledger-row:last-child { border-bottom: none; }
+  .ledger-label {
+    color: var(--ink-soft);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-size: 10.5px;
+  }
+  .ledger-value {
+    color: var(--ink);
+    font-weight: 500;
+    text-align: right;
+  }
+  .status-ok {
+    color: #3E7A4E;
+    font-weight: 500;
+  }
+
+  .body-copy {
+    padding: 26px 40px 8px;
+  }
+
+  .body-copy p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .steps {
+    padding: 12px 40px 8px;
+  }
+  .step {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--paper-line);
+  }
+  .step:first-child { border-top: none; }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold);
+    min-width: 26px;
+  }
+  .step-text { font-size: 14px; line-height: 1.5; color: var(--ink-soft); padding-top: 2px; }
+  .step-text strong { color: var(--ink); font-weight: 600; }
+
+  .cta-wrap {
+    padding: 10px 40px 34px;
+    text-align: center;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    padding: 16px 34px;
+    border: 1px solid var(--ink);
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 10px 24px -10px rgba(27,42,74,0.55);
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -10px rgba(27,42,74,0.65); }
+  .cta:active { transform: translateY(0); }
+  .cta-arrow { font-family: 'IBM Plex Mono', monospace; }
+
+  .support {
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+  .support a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--gold); }
+
+  .footer {
+    background: var(--ink);
+    color: #C7CBDA;
+    padding: 22px 40px 26px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .footer strong { color: #E7E2D2; }
+
+  @media (max-width: 480px) {
+    .letterhead, .ledger, .body-copy, .steps, .cta-wrap, .footer { padding-left: 22px; padding-right: 22px; }
+    h1 { font-size: 27px; }
+    .stamp { width: 74px; height: 74px; font-size: 9px; top: 22px; right: 20px; }
+    .perf { margin: 0 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stamp { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="letterhead">
+      <div class="eyebrow">Sahayak · Compliance Division</div>
+      <h1>Access Confirmed</h1>
+      <p class="subhead">Your AEGIS-X assessment engine is unlocked and ready.</p>
+      <div class="stamp">PAYMENT<br>VERIFIED</div>
+    </div>
+
+    <div class="perf"></div>
+
+    <div class="ledger" id="ledger">
+      <div class="ledger-row">
+        <span class="ledger-label">Product</span>
+        <span class="ledger-value">AEGIS-X Compliance Engine</span>
+      </div>
+      <div class="ledger-row">
+        <span class="ledger-label">Receipt No.</span>
+        <span class="ledger-value" id="paymentId">—</span>
+      </div>
+      <div class="ledger-row">
+        <span class="ledger-label">Status</span>
+        <span class="ledger-value status-ok">Access Granted</span>
+      </div>
+    </div>
+
+    <div class="body-copy">
+      <p>Thank you for trusting AEGIS-X with your consumer rights query. Your access is active immediately — no waiting, no approval queue.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Open the engine</strong> using the button below. Bookmark it — you'll want to return to it.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Describe your issue</strong> in your own words — Hindi, English, or Hinglish all work.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Get your assessment</strong> — relevant rights, next steps, and where to file, in under 30 seconds.</div>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a class="cta" href="https://elegantam.github.io/-aegis-x-client-/" target="_blank" rel="noopener">
+        Launch AEGIS-X <span class="cta-arrow">→</span>
+      </a>
+      <div class="support">
+        Need help? Message us on <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <strong>Disclaimer:</strong> AEGIS-X is an AI-based informational tool and does not constitute legal advice. Its output should not be relied upon as a substitute for consultation with a qualified lawyer or consumer rights professional. AEGIS-X does not represent, advise, or act on behalf of any user in legal proceedings. Assessments are AI-generated and may contain errors or omissions. Sahayak assumes no liability for actions taken based on AEGIS-X output. Purchase of this tool does not create an advocate-client relationship.
+    </div>
+  </div>
+
+<script>
+  // Pull Instamojo redirect params if present, to personalize the receipt.
+  const params = new URLSearchParams(window.location.search);
+  const paymentId = params.get('payment_id') || params.get('payment_request_id');
+  if (paymentId) {
+    document.getElementById('paymentId').textContent = paymentId;
+  }
+</script>
+
+</body>
+</html>
